@@ -53,9 +53,9 @@ class Application(Tk):
 		#print("openPort")
 		#print(self.serial)
 		if self.serial == None:
-			print(self.port.get())
-			#self.serial = serial.Serial(port=self.port.get(), baudrate=self.baud.get())
-			self.serial = serial.Serial("/dev/ttyUSB0", baudrate=self.baud.get())
+			#print(self.port.get())
+			self.serial = serial.Serial(port=self.port.get(), baudrate=self.baud.get())
+			#self.serial = serial.Serial("/dev/ttyUSB0", baudrate=self.baud.get())
 			#self.serial.open()
 		else:
 			self.serial.close()
@@ -100,7 +100,10 @@ class Application(Tk):
 		self.Send("get rssi")
 	
 	def GetTemp(self):
-		self.Send("get temp")	
+		self.Send("get temp")
+		
+	def Geti2c(self):
+		self.Send("get i2c")	
 		
 	def SetMonitorOn(self):
 		self.Send("monitor on")	
@@ -195,8 +198,7 @@ class Application(Tk):
 							self.text.insert(INSERT, "%c"%s)
 				
 				if(self.autoscroll): self.text.see("end")
-		else:
-			print("NONE")
+		
 		self.after(1, self.Receiver)
 		
 	def onExit(self):
@@ -298,6 +300,7 @@ class Application(Tk):
 		pacsatmenu.add_command(label=_("monitor off"), command=self.SetMonitorOff)
 		pacsatmenu.add_command(label=_("get temp"), command=self.GetTemp)
 		pacsatmenu.add_command(label=_("get rssi"), command=self.GetRSSI)
+		pacsatmenu.add_command(label=_("get i2c"), command=self.Geti2c)
 		self.menubar.add_cascade(label=_("Pacsat"), menu=pacsatmenu)
 		self.config(menu=self.menubar)
 		self.text = Text(wrap=NONE)
@@ -324,7 +327,8 @@ class Application(Tk):
 		self.rowconfigure(0, weight=1)
 		self.columnconfigure(0, weight=1)
 		self.protocol("WM_DELETE_WINDOW", self.onExit)
-		self.openPort()
+		#self.openPort()
+		#self.closePort()
 		
 	def __init__(self):
 		Tk.__init__(self)
