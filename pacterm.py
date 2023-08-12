@@ -50,17 +50,13 @@ class Application(Tk):
 		fd.close()
 		
 	def openPort(self):
-		#print("openPort")
-		#print(self.serial)
+		
 		if self.serial == None:
-			#print(self.port.get())
 			self.serial = serial.Serial(port=self.port.get(), baudrate=self.baud.get())
-			#self.serial = serial.Serial("/dev/ttyUSB0", baudrate=self.baud.get())
-			#self.serial.open()
 		else:
 			self.serial.close()
 			self.serial = Serial(port=self.port.get(), baudrate=self.baud.get())
-			#self.serial.open()
+			
 		self.text.insert(INSERT, "==========Port %s opened==========\n"%self.port.get(),"info")
 		self.Receiver()
 		
