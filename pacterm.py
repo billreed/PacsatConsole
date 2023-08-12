@@ -78,7 +78,7 @@ class Application(Tk):
 		self.Send(text)
 		
 	def SetUnixTime(self):
-		presentDate = datetime.datetime.now()
+		presentDate = datetime.datetime.utcnow()
 		unix_timestamp = datetime.datetime.timestamp(presentDate)
 		#print(int(unix_timestamp))
 		text="Set Unix Time " + str(int(unix_timestamp))
@@ -178,9 +178,9 @@ class Application(Tk):
 					#print("Pacsat time is ", dt, " CT")
 					rx = []
 					if ( nll == 1 ):
-						rx = "\nPacsat time is " + str(dt) + " CT\n"
+						rx = "\nPacsat time is " + str(dt) + " UTC\n"
 					else:
-						rx = "Pacsat time is " + str(dt) + " CT\n"
+						rx = "Pacsat time is " + str(dt) + " UTC\n"
 						
 				#print("*", rx)
 				#if (len(rx) < 9): rx = []
