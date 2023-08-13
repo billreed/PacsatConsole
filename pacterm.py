@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#  ...tnc-tools-master>python pacterm.py
+#Pacsat console terminal program
+#
 
 import time
 import datetime
@@ -80,9 +80,7 @@ class Application(Tk):
 	def SetUnixTime(self):
 		presentDate = datetime.datetime.utcnow()
 		unix_timestamp = datetime.datetime.timestamp(presentDate)
-		#print(int(unix_timestamp))
 		text="Set Unix Time " + str(int(unix_timestamp))
-		#print(text)
 		self.Send(text)
 	
 	def GetPacsatTime(self):
@@ -132,7 +130,6 @@ class Application(Tk):
 		data += self.endline.get().replace(" ","")
 		if self.serial != None:
 			newdata = data.encode('ascii', 'utf-8')
-			#print("Serial")
 			#print(newdata)
 			self.serial.write(bytes(newdata))
 			
@@ -167,15 +164,9 @@ class Application(Tk):
 					#print("Timestr1= ", timestr)
 					place1 = timestr + 19
 					place2 = rxstr.find("\r\nPacsat>")
-					#print(place1, " ",  place2)
-					#print(rxstr[place1:place2])
-					#print(len(rxstr[place1:place2]))
 					pactime = rxstr[place1:place2]
-					#print(len(pactime))
-					#print(pactime)
-				
 					dt = datetime.datetime.fromtimestamp(int(pactime))
-					#print("Pacsat time is ", dt, " CT")
+					#print("Pacsat time is ", dt, " UTC")
 					rx = []
 					if ( nll == 1 ):
 						rx = "\nPacsat time is " + str(dt) + " UTC\n"
@@ -201,6 +192,7 @@ class Application(Tk):
 		self.saveConfig()
 		#if askyesno(_("Exit"), _("Do you want to quit the application?")):
 		self.destroy()
+		
 	def setDefaults(self):
 		config = {}
 		config['endline'] = " "
@@ -212,6 +204,7 @@ class Application(Tk):
 		config['autoscroll'] = True
 		config['sendhex'] = False
 		return config
+		
 	def saveConfig(self):
 		config = {}
 		config['endline'] = self.endline.get()
@@ -225,6 +218,7 @@ class Application(Tk):
 		cfg = open(expanduser("~/.serialterminal.json"),"w")
 		cfg.write(json.dumps(config, indent = 4))
 		cfg.close()
+		
 	def createWidgets(self):
 		config = self.setDefaults()
 		if isfile(expanduser("~/.serialterminal.json")):
